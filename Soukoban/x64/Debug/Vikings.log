@@ -1,6 +1,16 @@
-﻿  Game.cpp
-  Player.cpp
-  Scene.cpp
+﻿  AABB.cpp
+  Entity.cpp
+  Game.cpp
+  Globals.cpp
   main.cpp
+  Object.cpp
+  Player.cpp
+  RenderComponent.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  Sprite.cpp
+  StaticImage.cpp
+  TileMap.cpp
   Generating Code...
-  Vikings.vcxproj -> C:\Users\isaacrp\Downloads\SUPER CHOCHOBAN\Vikings\x64\Debug\Vikings.exe
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Vikings.vcxproj -> C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Soukoban\x64\Debug\Vikings.exe

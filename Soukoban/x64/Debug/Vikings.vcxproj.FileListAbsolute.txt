@@ -1,1 +1,2 @@
 C:\Users\isaacrp\Downloads\SUPER CHOCHOBAN\Vikings\x64\Debug\Vikings.exe
+C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Soukoban\x64\Debug\Vikings.exe
