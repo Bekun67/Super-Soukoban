@@ -1,2 +1,6 @@
-﻿  Player.cpp
-  Vikings.vcxproj -> C:\Users\isaacrp\Downloads\p6-Vikings\Super Soukoban\x64\Debug\Vikings.exe
+﻿  Game.cpp
+  Player.cpp
+  Scene.cpp
+  main.cpp
+  Generating Code...
+  Vikings.vcxproj -> C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban\x64\Debug\Vikings.exe

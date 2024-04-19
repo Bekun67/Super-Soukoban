@@ -5,8 +5,8 @@
 //Representation model size: 32x32
 #define PLAYER_FRAME_SIZE		32
 
-#define PLAYER_PHYSICAL_WIDTH	10
-#define PLAYER_PHYSICAL_HEIGHT	10
+#define PLAYER_PHYSICAL_WIDTH	32
+#define PLAYER_PHYSICAL_HEIGHT	32
 
 //Horizontal speed
 #define PLAYER_SPEED			2
@@ -50,6 +50,8 @@ private:
 	bool IsLookingLeft() const;
 	bool IsLookingUp() const;
 	bool IsLookingDown() const;
+
+	bool Moving = false;
 
 	void MoveLeft();
 

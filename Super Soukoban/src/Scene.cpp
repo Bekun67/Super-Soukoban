@@ -109,7 +109,7 @@ AppStatus Scene::LoadLevel(int stage)
 	if (stage == 1)
 	{
 		map = new int[size] {
-				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
 				6, 6, 2, 3, 3, 3, 3, 3, 2, 6, 6,
 				6, 6, 2, 5, 5, 7, 7, 7, 2, 6, 6,
 				6, 6, 2, 5, 5, 5, 3, 3, 3, 2, 6,
@@ -121,7 +121,7 @@ AppStatus Scene::LoadLevel(int stage)
 				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
 		};
 		mapAux = new int[size] {
-				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
 				6, 6, 2, 3, 3, 3, 3, 3, 2, 6, 6,
 				6, 6, 2, 5, 5, 7, 7, 7, 2, 6, 6,
 				6, 6, 2, 5, 5, 5, 3, 3, 3, 2, 6,
@@ -199,7 +199,7 @@ AppStatus Scene::LoadLevel(int stage)
 		}
 	}
 	pos.x = 4 * TILE_SIZE;
-	pos.y = 3 * TILE_SIZE;
+	pos.y = 3 * TILE_SIZE - 1;
 	player->SetPos(pos);
 	//Tile map
 	level->Load(map, LEVEL_WIDTH, LEVEL_HEIGHT);

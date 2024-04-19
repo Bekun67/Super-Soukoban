@@ -243,9 +243,10 @@ void Player::MoveX()
 	AABB box;
 	int prev_x = pos.x;
 
-	if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN))
+	if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !Moving)
 	{
-		pos.x += -PLAYER_SPEED;
+		Moving = true;
+
 		if (state == State::IDLE)
 		{
 			StartWalkingLeft();
@@ -253,6 +254,13 @@ void Player::MoveX()
 		else
 		{
 			if (IsLookingRight() or IsLookingDown() or IsLookingUp()) ChangeAnimLeft();
+		}
+
+		int maxMove = pos.x;
+		maxMove -= TILE_SIZE;
+		while (maxMove < pos.x)
+		{
+			pos.x += -PLAYER_SPEED;
 		}
 
 		box = GetHitbox();
@@ -292,15 +300,24 @@ void Player::MoveX()
 				}
 			}
 		}
+		Moving = false;
 		if (state == State::PUSHING) Stop();
 	}
 	else if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN))
 	{
-		pos.x += PLAYER_SPEED;
+		Moving = true;
+
 		if (state == State::IDLE) StartWalkingRight();
 		else
 		{
 			if (IsLookingLeft() or IsLookingDown() or IsLookingUp()) ChangeAnimRight();
+		}
+
+		int maxMove = pos.x;
+		maxMove += TILE_SIZE;
+		while (maxMove > pos.x)
+		{
+			pos.x += PLAYER_SPEED;
 		}
 
 		box = GetHitbox();
@@ -335,6 +352,7 @@ void Player::MoveX()
 			}
 		}
 		if (state == State::PUSHING) Stop();
+		Moving = false;
 	}
 	else
 	{
@@ -348,11 +366,19 @@ void Player::MoveY()
 
 	if (IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT))
 	{
-		pos.y += -PLAYER_SPEED;
+		Moving = true;
+
 		if (state == State::IDLE) StartWalkingUp();
 		else
 		{
 			if (IsLookingRight() or IsLookingDown() or IsLookingLeft()) ChangeAnimUp();
+		}
+
+		int maxMove = pos.y;
+		maxMove += -TILE_SIZE;
+		while (maxMove < pos.y)
+		{
+			pos.y += -PLAYER_SPEED;
 		}
 
 		box = GetHitbox();
@@ -387,15 +413,23 @@ void Player::MoveY()
 			}
 		}
 		if (state == State::PUSHING) Stop();
-
+		Moving = false;
 	}
 	else if (IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT))
 	{
-		pos.y += PLAYER_SPEED;
+		Moving = true;
+
 		if (state == State::IDLE) StartWalkingDown();
 		else
 		{
 			if (IsLookingRight() or IsLookingLeft() or IsLookingUp()) ChangeAnimDown();
+		}
+
+		int maxMove = pos.y;
+		maxMove += TILE_SIZE;
+		while (maxMove > pos.y)
+		{
+			pos.y += PLAYER_SPEED;
 		}
 
 		box = GetHitbox();
@@ -430,6 +464,7 @@ void Player::MoveY()
 			}
 		}
 		if (state == State::PUSHING) Stop();
+		Moving = false;
 	}
 	else
 	{
