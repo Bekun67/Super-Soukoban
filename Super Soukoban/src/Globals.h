@@ -23,7 +23,10 @@ void log(const char file[], int line, const char* text, ...);
 #define TILE_SIZE		32
 #define LEVEL_WIDTH		11
 #define LEVEL_HEIGHT	10
+
+//LEVEL 1
 #define WINCOUNT_LVL1   3
+#define STEPCOUNT_LVL1  120
 
 //Entities animation delay
 #define ANIM_DELAY		4

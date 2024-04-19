@@ -314,7 +314,7 @@ bool TileMap::BoxRight(const Point& p, int distance) const
 	//Calculate the tile coordinates and the range of tiles to check for collision
 	x = p.x / TILE_SIZE;
 	y = p.y / TILE_SIZE;
-	x1 = p.x / TILE_SIZE + 2;
+	x1 = p.x / TILE_SIZE + 1;
 
 	if (IsTileSolid(GetTileIndex(x1, y)))
 	{
@@ -368,7 +368,7 @@ bool TileMap::BoxDown(const Point& p, int distance) const
 	//Calculate the tile coordinates and the range of tiles to check for collision
 	x = p.x / TILE_SIZE;
 	y = p.y / TILE_SIZE;
-	y1 = p.y / TILE_SIZE + 2;
+	y1 = p.y / TILE_SIZE + 1;
 
 	if (IsTileSolid(GetTileIndex(x, y1)))
 	{

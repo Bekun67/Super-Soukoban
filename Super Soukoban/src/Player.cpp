@@ -229,13 +229,31 @@ void Player::Update()
 	//Instead, uses an independent behaviour for each axis.
 	MoveX();
 	MoveY();
+	WaitForInput();
 
 	Sprite* sprite = dynamic_cast<Sprite*>(render);
 	sprite->Update();
 }
 
-void Player::MoveLeft()
+void Player::CheckSteps()
 {
+	if (level == 1)
+	{
+		if (steps == STEPCOUNT_LVL1)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
+}
+
+void Player::WaitForInput()
+{
+	if (IsKeyUp(KEY_LEFT) and IsKeyUp(KEY_RIGHT) and IsKeyUp(KEY_UP) and IsKeyUp(KEY_DOWN))
+	{
+		Moving = false;
+	}
 }
 
 void Player::MoveX()
@@ -243,234 +261,289 @@ void Player::MoveX()
 	AABB box;
 	int prev_x = pos.x;
 
-	if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !Moving)
+	if (IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !lost)
 	{
-		Moving = true;
-
-		if (state == State::IDLE)
+		WaitForInput();
+		if (Moving == false)
 		{
-			StartWalkingLeft();
-		}
-		else
-		{
-			if (IsLookingRight() or IsLookingDown() or IsLookingUp()) ChangeAnimLeft();
-		}
-
-		int maxMove = pos.x;
-		maxMove -= TILE_SIZE;
-		while (maxMove < pos.x)
-		{
-			pos.x += -PLAYER_SPEED;
-		}
-
-		box = GetHitbox();
-		if (map->TestCollisionWallLeft(box))
-		{
-			pos.x = prev_x;
-			if (state == State::WALKING) Stop();
-		}
-		if (map->TestBoxLeft(box))
-		{
-			StartPushingLeft();
-			pos.x = prev_x;
-			if (state == State::WALKING) Stop();
-			if (map->MoveBoxLeft(box))
+			Moving = true;
+			if (state == State::IDLE)
 			{
-				int x1 = (pos.x / TILE_SIZE) - 1;
-				int x2 = (pos.x / TILE_SIZE) - 2;
+				StartWalkingLeft();
+			}
+			else
+			{
+				if (IsLookingRight() or IsLookingDown() or IsLookingUp()) ChangeAnimLeft();
+			}
 
-				Tile nextTile = map->GetTileIndex(x1, pos.y / TILE_SIZE);
-				map->ChangeTile(x2, pos.y / TILE_SIZE, nextTile);
+			int maxMove = pos.x;
+			maxMove -= TILE_SIZE;
+			while (maxMove < pos.x)
+			{
+				pos.x += -PLAYER_SPEED;
+			}
+			steps++;
 
-				Tile OldTile = mapAux->GetOldTileIndex(x1, pos.y / TILE_SIZE);
-				map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
-
-				Tile Destination = mapAux->GetOldTileIndex(x2, pos.y / TILE_SIZE);
-				if (Destination == Tile::FLOORRED)
+			box = GetHitbox();
+			if (map->TestCollisionWallLeft(box))
+			{
+				pos.x = prev_x;
+				steps--;
+				if (state == State::WALKING) Stop();
+			}
+			if (map->TestBoxLeft(box))
+			{
+				StartPushingLeft();
+				pos.x = prev_x;
+				if (state == State::WALKING) Stop();
+				if (map->MoveBoxLeft(box))
 				{
-					map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOXU);
-					map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
-				}
+					int x1 = (pos.x / TILE_SIZE) - 1;
+					int x2 = (pos.x / TILE_SIZE) - 2;
 
-				if (OldTile == Tile::FLOORRED)
-				{
-					nextTile = Tile::BOXU;
+					Tile nextTile = map->GetTileIndex(x1, pos.y / TILE_SIZE);
 					map->ChangeTile(x2, pos.y / TILE_SIZE, nextTile);
-					map->CheckWin(WINCOUNT_LVL1);
+
+					Tile OldTile = mapAux->GetOldTileIndex(x1, pos.y / TILE_SIZE);
+					map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
+
+					Tile Destination = mapAux->GetOldTileIndex(x2, pos.y / TILE_SIZE);
+					if (Destination == Tile::FLOORRED)
+					{
+						map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOXU);
+						map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
+					}
+
+					if (OldTile == Tile::FLOORRED)
+					{
+						nextTile = Tile::BOXU;
+						map->ChangeTile(x2, pos.y / TILE_SIZE, nextTile);
+						map->CheckWin(WINCOUNT_LVL1);
+					}
+
+					int maxMove2 = pos.x;
+					maxMove2 -= TILE_SIZE;
+					while (maxMove2 < pos.x)
+					{
+						pos.x += -PLAYER_SPEED;
+					}
+					steps++;
 				}
 			}
+			if (state == State::PUSHING) Stop();
+			CheckSteps();
 		}
-		Moving = false;
-		if (state == State::PUSHING) Stop();
-	}
-	else if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN))
-	{
-		Moving = true;
 
-		if (state == State::IDLE) StartWalkingRight();
+	}
+	else if (IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !lost)
+	{
+		WaitForInput();
+		if (Moving == false)
+		{
+			Moving = true;
+			if (state == State::IDLE) StartWalkingRight();
+			else
+			{
+				if (IsLookingLeft() or IsLookingDown() or IsLookingUp()) ChangeAnimRight();
+			}
+
+			int maxMove = pos.x;
+			maxMove += TILE_SIZE;
+			while (maxMove > pos.x)
+			{
+				pos.x += PLAYER_SPEED;
+			}
+			steps++;
+
+			box = GetHitbox();
+			if (map->TestCollisionWallRight(box))
+			{
+				steps--;
+				pos.x = prev_x;
+				if (state == State::WALKING) Stop();
+			}
+			if (map->TestBoxRight(box))
+			{
+				StartPushingRight();
+				pos.x = prev_x;
+				if (state == State::WALKING) Stop();
+				if (map->MoveBoxRight(box))
+				{
+					int x1 = (pos.x / TILE_SIZE) + 1;
+					int x2 = (pos.x / TILE_SIZE) + 2;
+
+					Tile nextTile = map->GetTileIndex(x1, pos.y / TILE_SIZE);
+					map->ChangeTile(x2, pos.y / TILE_SIZE, nextTile);
+
+					Tile OldTile = mapAux->GetOldTileIndex(x1, pos.y / TILE_SIZE);
+					map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
+
+					Tile Destination = mapAux->GetOldTileIndex(x2, pos.y / TILE_SIZE);
+					if (Destination == Tile::FLOORRED)
+					{
+						map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOXU);
+						map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
+						map->CheckWin(WINCOUNT_LVL1);
+					}
+
+					int maxMove2 = pos.x;
+					maxMove2 += TILE_SIZE;
+					while (maxMove2 > pos.x)
+					{
+						pos.x += PLAYER_SPEED;
+					}
+					steps++;
+				}
+			}
+			if (state == State::PUSHING) Stop();
+		}
 		else
 		{
-			if (IsLookingLeft() or IsLookingDown() or IsLookingUp()) ChangeAnimRight();
-		}
-
-		int maxMove = pos.x;
-		maxMove += TILE_SIZE;
-		while (maxMove > pos.x)
-		{
-			pos.x += PLAYER_SPEED;
-		}
-
-		box = GetHitbox();
-		if (map->TestCollisionWallRight(box))
-		{
-			pos.x = prev_x;
 			if (state == State::WALKING) Stop();
 		}
-		if (map->TestBoxRight(box))
-		{
-			StartPushingRight();
-			pos.x = prev_x;
-			if (state == State::WALKING) Stop();
-			if (map->MoveBoxRight(box))
-			{
-				int x1 = (pos.x / TILE_SIZE) + 1;
-				int x2 = (pos.x / TILE_SIZE) + 2;
-
-				Tile nextTile = map->GetTileIndex(x1, pos.y / TILE_SIZE);
-				map->ChangeTile(x2, pos.y / TILE_SIZE, nextTile);
-
-				Tile OldTile = mapAux->GetOldTileIndex(x1, pos.y / TILE_SIZE);
-				map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
-
-				Tile Destination = mapAux->GetOldTileIndex(x2, pos.y / TILE_SIZE);
-				if (Destination == Tile::FLOORRED)
-				{
-					map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOXU);
-					map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
-					map->CheckWin(WINCOUNT_LVL1);
-				}
-			}
-		}
-		if (state == State::PUSHING) Stop();
-		Moving = false;
-	}
-	else
-	{
-		if (state == State::WALKING) Stop();
+		CheckSteps();
 	}
 }
+
 void Player::MoveY()
 {
 	AABB box;
 	int prev_y = pos.y;
 
-	if (IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT))
+	if (IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !lost)
 	{
-		Moving = true;
-
-		if (state == State::IDLE) StartWalkingUp();
-		else
+		WaitForInput();
+		if (Moving == false)
 		{
-			if (IsLookingRight() or IsLookingDown() or IsLookingLeft()) ChangeAnimUp();
-		}
-
-		int maxMove = pos.y;
-		maxMove += -TILE_SIZE;
-		while (maxMove < pos.y)
-		{
-			pos.y += -PLAYER_SPEED;
-		}
-
-		box = GetHitbox();
-		if (map->TestCollisionWallUp(box))
-		{
-			pos.y = prev_y;
-			if (state == State::WALKING) Stop();
-		}
-		if (map->TestBoxUp(box))
-		{
-			StartPushingUp();
-			pos.y = prev_y;
-			if (state == State::WALKING) Stop();
-			if (map->MoveBoxUp(box))
+			Moving = true;
+			if (state == State::IDLE) StartWalkingUp();
+			else
 			{
-				int y1 = (pos.y / TILE_SIZE) - 1;
-				int y2 = (pos.y / TILE_SIZE) - 2;
+				if (IsLookingRight() or IsLookingDown() or IsLookingLeft()) ChangeAnimUp();
+			}
 
-				Tile nextTile = map->GetTileIndex(pos.x / TILE_SIZE, y1);
-				map->ChangeTile(pos.x / TILE_SIZE, y2, nextTile);
+			int maxMove = pos.y;
+			maxMove += -TILE_SIZE;
+			while (maxMove < pos.y)
+			{
+				pos.y += -PLAYER_SPEED;
+			}
+			steps++;
 
-				Tile OldTile = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y1);
-				map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
-
-				Tile Destination = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y2);
-				if (Destination == Tile::FLOORRED)
+			box = GetHitbox();
+			if (map->TestCollisionWallUp(box))
+			{
+				steps--;
+				pos.y = prev_y;
+				if (state == State::WALKING) Stop();
+			}
+			if (map->TestBoxUp(box))
+			{
+				StartPushingUp();
+				pos.y = prev_y;
+				if (state == State::WALKING) Stop();
+				if (map->MoveBoxUp(box))
 				{
-					map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOXU);
+					int y1 = (pos.y / TILE_SIZE) - 1;
+					int y2 = (pos.y / TILE_SIZE) - 2;
+
+					Tile nextTile = map->GetTileIndex(pos.x / TILE_SIZE, y1);
+					map->ChangeTile(pos.x / TILE_SIZE, y2, nextTile);
+
+					Tile OldTile = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y1);
 					map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
-					map->CheckWin(WINCOUNT_LVL1);
+
+					Tile Destination = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y2);
+					if (Destination == Tile::FLOORRED)
+					{
+						map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOXU);
+						map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
+						map->CheckWin(WINCOUNT_LVL1);
+					}
+
+					int maxMove2 = pos.y;
+					maxMove2 += -TILE_SIZE;
+					while (maxMove2 < pos.y)
+					{
+						pos.y += -PLAYER_SPEED;
+					}
+					steps++;
 				}
 			}
+			if (state == State::PUSHING) Stop();
 		}
-		if (state == State::PUSHING) Stop();
-		Moving = false;
+		CheckSteps();
 	}
-	else if (IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT))
+	else if (IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !lost)
 	{
-		Moving = true;
-
-		if (state == State::IDLE) StartWalkingDown();
-		else
+		WaitForInput();
+		if (Moving == false)
 		{
-			if (IsLookingRight() or IsLookingLeft() or IsLookingUp()) ChangeAnimDown();
-		}
-
-		int maxMove = pos.y;
-		maxMove += TILE_SIZE;
-		while (maxMove > pos.y)
-		{
-			pos.y += PLAYER_SPEED;
-		}
-
-		box = GetHitbox();
-		if (map->TestCollisionWallDown(box))
-		{
-			pos.y = prev_y;
-			if (state == State::WALKING) Stop();
-		}
-		if (map->TestBoxDown(box))
-		{
-			StartPushingDown();
-			pos.y = prev_y;
-			if (state == State::WALKING) Stop();
-			if (map->MoveBoxDown(box))
+			Moving = true;
+			if (state == State::IDLE) StartWalkingDown();
+			else
 			{
-				int y1 = (pos.y / TILE_SIZE) + 1;
-				int y2 = (pos.y / TILE_SIZE) + 2;
+				if (IsLookingRight() or IsLookingLeft() or IsLookingUp()) ChangeAnimDown();
+			}
 
-				Tile nextTile = map->GetTileIndex(pos.x / TILE_SIZE, y1);
-				map->ChangeTile(pos.x / TILE_SIZE, y2, nextTile);
+			int maxMove = pos.y;
+			maxMove += TILE_SIZE;
+			while (maxMove > pos.y)
+			{
+				pos.y += PLAYER_SPEED;
+			}
+			steps++;
 
-				Tile OldTile = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y1);
-				map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
-
-				Tile Destination = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y2);
-				if (Destination == Tile::FLOORRED)
+			box = GetHitbox();
+			if (map->TestCollisionWallDown(box))
+			{
+				steps--;
+				pos.y = prev_y;
+				if (state == State::WALKING) Stop();
+			}
+			if (map->TestBoxDown(box))
+			{
+				StartPushingDown();
+				pos.y = prev_y;
+				if (state == State::WALKING) Stop();
+				if (map->MoveBoxDown(box))
 				{
-					map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOXU);
+					int y1 = (pos.y / TILE_SIZE) + 1;
+					int y2 = (pos.y / TILE_SIZE) + 2;
+
+					Tile nextTile = map->GetTileIndex(pos.x / TILE_SIZE, y1);
+					map->ChangeTile(pos.x / TILE_SIZE, y2, nextTile);
+
+					Tile OldTile = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y1);
 					map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
-					map->CheckWin(WINCOUNT_LVL1);
+
+					Tile Destination = mapAux->GetOldTileIndex(pos.x / TILE_SIZE, y2);
+					if (Destination == Tile::FLOORRED)
+					{
+						map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOXU);
+						map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
+						map->CheckWin(WINCOUNT_LVL1);
+					}
+
+					int maxMove2 = pos.y;
+					maxMove2 += TILE_SIZE;
+					while (maxMove2 > pos.y)
+					{
+						pos.y += PLAYER_SPEED;
+					}
+					steps++;
 				}
 			}
+			if (state == State::PUSHING) Stop();
 		}
-		if (state == State::PUSHING) Stop();
-		Moving = false;
+		else
+		{
+			if (state == State::WALKING) Stop();
+		}
 	}
-	else
-	{
-		if (state == State::WALKING) Stop();
-	}
+	CheckSteps();
 }
+
 void Player::DrawDebug(const Color& col) const
 {
 	Entity::DrawHitbox(pos.x, pos.y, width, height, col);

@@ -45,6 +45,10 @@ public:
 	void DrawDebug(const Color& col) const;
 	void Release();
 
+	int steps = 0;
+	int level = 0;
+	bool lost = false;
+
 private:
 	bool IsLookingRight() const;
 	bool IsLookingLeft() const;
@@ -52,8 +56,6 @@ private:
 	bool IsLookingDown() const;
 
 	bool Moving = false;
-
-	void MoveLeft();
 
 	bool IsMoving() const;
 
@@ -81,6 +83,10 @@ private:
 	void ChangeAnimUp();
 	void ChangeAnimDown();
 
+	void WaitForInput();
+	bool CanMove;
+
+	void CheckSteps();
 
 	State state;
 	Look look;

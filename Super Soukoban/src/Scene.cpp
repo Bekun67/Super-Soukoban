@@ -93,6 +93,7 @@ AppStatus Scene::Init()
 
 	return AppStatus::OK;
 }
+
 AppStatus Scene::LoadLevel(int stage)
 {
 	int size;
@@ -108,6 +109,10 @@ AppStatus Scene::LoadLevel(int stage)
 	size = LEVEL_WIDTH * LEVEL_HEIGHT;
 	if (stage == 1)
 	{
+		player->level = 1;
+		player->steps = 0;
+		player->lost = false;
+
 		map = new int[size] {
 			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
 				6, 6, 2, 3, 3, 3, 3, 3, 2, 6, 6,
@@ -219,7 +224,10 @@ void Scene::Update()
 		debug = (DebugMode)(((int)debug + 1) % (int)DebugMode::SIZE);
 	}
 	//Debug levels instantly
-	if (IsKeyPressed(KEY_R))		LoadLevel(1);
+	if (IsKeyPressed(KEY_R))
+	{
+		LoadLevel(1);
+	}
 	//else if (IsKeyPressed(KEY_TWO))	LoadLevel(2);
 
 	level->Update();
@@ -303,5 +311,26 @@ void Scene::RenderObjectsDebug(const Color& col) const
 void Scene::RenderGUI() const
 {
 	//Temporal approach
-	DrawText(TextFormat("SCORE : %d", player->GetScore()), 10, 10, 8, LIGHTGRAY);
+	if (player->level == 1)
+	{
+		DrawText(TextFormat("STAGE", player->GetScore()), 10, 10, 8, YELLOW);
+		DrawText(TextFormat("01", player->GetScore()), 58, 10, 8, LIGHTGRAY);
+
+		DrawText(TextFormat("STEP", player->steps), 10, 25, 8, YELLOW);
+
+		if (player->steps < 10)
+		{
+			DrawText(TextFormat("000%i", player->steps), 45, 25, 8, LIGHTGRAY);
+		}
+		else if (player->steps < 100)
+		{
+			DrawText(TextFormat("00%i", player->steps), 45, 25, 8, LIGHTGRAY);
+		}
+		else if (player->steps < 1000)
+		{
+			DrawText(TextFormat("0%i", player->steps), 45, 25, 8, LIGHTGRAY);
+		}
+		DrawText(TextFormat("LIMIT", player->steps), 10, 35, 8, YELLOW);
+		DrawText(TextFormat("0120", player->steps), 45, 35, 8, LIGHTGRAY);
+	}
 }
