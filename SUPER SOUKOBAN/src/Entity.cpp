@@ -35,7 +35,7 @@ Point Entity::GetRenderingPosition() const
 {
 	Point p;
 	p.x = pos.x + width / 2 - frame_width / 2;
-	p.y = pos.y - (frame_height-1);
+	p.y = pos.y - (frame_height - 1);
 	return p;
 }
 void Entity::Draw() const
@@ -53,14 +53,14 @@ void Entity::DrawHitbox(const Color& col) const
 	Color c = col;
 	c.a = 128;		//50% transparent
 
-	render->DrawBox(pos.x, pos.y-(height-1), width, height, c);
-	render->DrawCorners(pos.x, pos.y-(height-1), width, height);
+	render->DrawBox(pos.x, pos.y - (height - 1), width, height, c);
+	render->DrawCorners(pos.x, pos.y - (height - 1), width, height);
 }
 void Entity::DrawHitbox(int x, int y, int w, int h, const Color& col) const
 {
 	Color c = col;
 	c.a = 128;		//50% transparent
 
-	render->DrawBox(x, y-(h-1), w, h, c);
-	render->DrawCorners(x, y-(h-1), w, h);
+	render->DrawBox(x, y - (h - 1), w, h, c);
+	render->DrawCorners(x, y - (h - 1), w, h);
 }

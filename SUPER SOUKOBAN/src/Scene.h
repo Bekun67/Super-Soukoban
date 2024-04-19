@@ -19,20 +19,19 @@ public:
 
 private:
     AppStatus LoadLevel(int stage);
-    
-    void CheckCollisions(); 
+
+    void CheckCollisions();
     void ClearLevel();
     void RenderObjects() const;
     void RenderObjectsDebug(const Color& col) const;
 
     void RenderGUI() const;
 
-    Player *player;
-    TileMap *level;
+    Player* player;
+    TileMap* level;
     TileMap* Auxlevel;
     std::vector<Object*> objects;
 
     Camera2D camera;
     DebugMode debug;
 };
-

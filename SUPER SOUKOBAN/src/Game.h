@@ -23,8 +23,8 @@ private:
     void UnloadResources();
 
     GameState state;
-    Scene *scene;
-    const Texture2D *img_menu;
+    Scene* scene;
+    const Texture2D* img_menu;
 
     //To work with original game units and then scale the result
     RenderTexture2D target;

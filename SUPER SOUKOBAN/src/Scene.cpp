@@ -5,9 +5,9 @@
 Scene::Scene()
 {
 	player = nullptr;
-    level = nullptr;
+	level = nullptr;
 	Auxlevel = nullptr;
-	
+
 	camera.target = { 0, 0 };				//Center of the screen
 	camera.offset = { 0, MARGIN_GUI_Y };	//Offset from the target (center of the screen)
 	camera.rotation = 0.0f;					//No rotation
@@ -23,12 +23,12 @@ Scene::~Scene()
 		delete player;
 		player = nullptr;
 	}
-    if (level != nullptr)
-    {
+	if (level != nullptr)
+	{
 		level->Release();
-        delete level;
-        level = nullptr;
-    }
+		delete level;
+		level = nullptr;
+	}
 	if (Auxlevel != nullptr)
 	{
 		Auxlevel->Release();
@@ -58,12 +58,12 @@ AppStatus Scene::Init()
 	}
 
 	//Create level 
-    level = new TileMap();
-    if (level == nullptr)
-    {
-        LOG("Failed to allocate memory for Level");
-        return AppStatus::ERROR;
-    }
+	level = new TileMap();
+	if (level == nullptr)
+	{
+		LOG("Failed to allocate memory for Level");
+		return AppStatus::ERROR;
+	}
 	Auxlevel = new TileMap();
 	if (Auxlevel == nullptr)
 	{
@@ -91,7 +91,7 @@ AppStatus Scene::Init()
 	player->SetTileMap(level);
 	player->SetAuxTileMap(Auxlevel);
 
-    return AppStatus::OK;
+	return AppStatus::OK;
 }
 AppStatus Scene::LoadLevel(int stage)
 {
@@ -99,10 +99,10 @@ AppStatus Scene::LoadLevel(int stage)
 	int x, y, i;
 	Tile tile;
 	Point pos;
-	int *map = nullptr;
+	int* map = nullptr;
 	int* mapAux = nullptr;
-	Object *obj;
-	
+	Object* obj;
+
 	ClearLevel();
 
 	size = LEVEL_WIDTH * LEVEL_HEIGHT;
@@ -138,7 +138,7 @@ AppStatus Scene::LoadLevel(int stage)
 	{
 		//Error level doesn't exist or incorrect level number
 		LOG("Failed to load level, stage %d doesn't exist", stage);
-		return AppStatus::ERROR;	
+		return AppStatus::ERROR;
 	}
 
 	//Entities and objects
@@ -230,10 +230,10 @@ void Scene::Render()
 {
 	BeginMode2D(camera);
 
-    level->Render();
+	level->Render();
 	if (debug == DebugMode::OFF || debug == DebugMode::SPRITES_AND_HITBOXES)
 	{
-		RenderObjects(); 
+		RenderObjects();
 		player->Draw();
 	}
 	if (debug == DebugMode::SPRITES_AND_HITBOXES || debug == DebugMode::ONLY_HITBOXES)
@@ -248,7 +248,7 @@ void Scene::Render()
 }
 void Scene::Release()
 {
-    level->Release();
+	level->Release();
 	Auxlevel->Release();
 	player->Release();
 	ClearLevel();
@@ -256,25 +256,25 @@ void Scene::Release()
 void Scene::CheckCollisions()
 {
 	AABB player_box, obj_box;
-	
+
 	player_box = player->GetHitbox();
 	auto it = objects.begin();
 	while (it != objects.end())
 	{
 		obj_box = (*it)->GetHitbox();
-		if(player_box.TestAABB(obj_box))
+		if (player_box.TestAABB(obj_box))
 		{
 			player->IncrScore((*it)->Points());
-			
+
 			//Delete the object
-			delete* it; 
+			delete* it;
 			//Erase the object from the vector and get the iterator to the next valid element
-			it = objects.erase(it); 
+			it = objects.erase(it);
 		}
 		else
 		{
 			//Move to the next object
-			++it; 
+			++it;
 		}
 	}
 }

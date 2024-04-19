@@ -34,15 +34,15 @@ void TileMap::InitTileDictionary()
 
 	dict_rect[(int)Tile::BRICK] = { n,  0, n, n };
 
-	dict_rect[(int)Tile::BRICKB] = {n * 2, 0, n, n };
+	dict_rect[(int)Tile::BRICKB] = { n * 2, 0, n, n };
 
-	dict_rect[(int)Tile::OUT] = {n, n, n, n };
+	dict_rect[(int)Tile::OUT] = { n, n, n, n };
 
 	dict_rect[(int)Tile::FLOOR] = { 0, n, n, n };
 
 	dict_rect[(int)Tile::BOXU] = { n * 3, 0, n, n };
 
-	dict_rect[(int)Tile::FLOORRED] = {n * 2, n, n, n };
+	dict_rect[(int)Tile::FLOORRED] = { n * 2, n, n, n };
 }
 AppStatus TileMap::Initialise()
 {
@@ -58,14 +58,14 @@ AppStatus TileMap::Initialise()
 }
 AppStatus TileMap::Load(int data[], int w, int h)
 {
-	size = w*h;
+	size = w * h;
 	width = w;
 	height = h;
 
 	if (map != nullptr)	delete[] map;
 
 	map = new Tile[size];
-	if (map == nullptr)	
+	if (map == nullptr)
 	{
 		LOG("Failed to allocate memory for tile map");
 		return AppStatus::ERROR;
@@ -106,17 +106,17 @@ void TileMap::CheckWin(int winCount)
 	}
 	if (count == winCount)
 	{
-	//winCondition activa
+		//winCondition activa
 	}
 }
 
 Tile TileMap::GetTileIndex(int x, int y) const
 {
-	int idx = x + y*width;
-	if(idx < 0 || idx >= size)
+	int idx = x + y * width;
+	if (idx < 0 || idx >= size)
 	{
 		LOG("Error: Index out of bounds. Tile map dimensions: %dx%d. Given index: (%d, %d)", width, height, x, y)
-		return Tile::AIR;
+			return Tile::AIR;
 	}
 	return map[x + y * width];
 }
@@ -243,7 +243,7 @@ bool TileMap::CollisionX(const Point& p, int distance) const
 	x = p.x / TILE_SIZE;
 	y0 = p.y / TILE_SIZE;
 	y1 = (p.y + distance - 1) / TILE_SIZE;
-	
+
 	//Iterate over the tiles within the vertical range
 	for (y = y0; y <= y1; ++y)
 	{
@@ -406,7 +406,7 @@ void TileMap::Render()
 }
 void TileMap::Release()
 {
-	ResourceManager& data = ResourceManager::Instance(); 
+	ResourceManager& data = ResourceManager::Instance();
 	data.ReleaseTexture(Resource::IMG_TILES);
 
 	dict_rect.clear();

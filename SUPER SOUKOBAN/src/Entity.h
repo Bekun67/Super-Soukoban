@@ -20,7 +20,7 @@ public:
 	//Draw representation model
 	void Draw() const;
 	void DrawTint(const Color& col) const;
-	
+
 	//Draw logical/physical model (hitbox)
 	void DrawHitbox(const Color& col) const;
 	void DrawHitbox(int x, int y, int w, int h, const Color& col) const;
@@ -30,10 +30,10 @@ protected:
 
 	//Logical/physical model
 	Point pos, dir;
-	int width, height;				
+	int width, height;
 
 	//Representation model
 	int frame_width, frame_height;
 
-	RenderComponent *render;
+	RenderComponent* render;
 };

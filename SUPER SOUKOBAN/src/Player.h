@@ -27,12 +27,12 @@ enum class PlayerAnim {
 	NUM_ANIMATIONS
 };
 
-class Player: public Entity
+class Player : public Entity
 {
 public:
 	Player(const Point& p, State s, Look view);
 	~Player();
-	
+
 	AppStatus Initialise();
 	void SetTileMap(TileMap* tilemap);
 	void SetAuxTileMap(TileMap* tilemap);
@@ -78,12 +78,12 @@ private:
 	void ChangeAnimLeft();
 	void ChangeAnimUp();
 	void ChangeAnimDown();
-	
+
 
 	State state;
 	Look look;
 
-	TileMap *map;
+	TileMap* map;
 	TileMap* mapAux;
 
 	int score;

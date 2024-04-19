@@ -13,12 +13,12 @@ enum class Tile {
 	//  0: air tile
 	AIR = 0,
 
-	BOX = 1, 
-	BRICK = 2, 
+	BOX = 1,
+	BRICK = 2,
 	BRICKB = 3,
 	BOXU = 4,
-	FLOOR = 5, 
-	OUT = 6, 
+	FLOOR = 5,
+	OUT = 6,
 	FLOORRED = 7,
 	COMPLETION = 8,
 
@@ -89,16 +89,15 @@ private:
 	bool BoxDown(const Point& p, int distance) const;
 
 	//Tile map
-	Tile *map;
+	Tile* map;
 	Tile* mapAux;
 
 	//Size of the tile map
 	int size, width, height;
-	
+
 	//Dictionary of tile frames
 	std::unordered_map<int, Rectangle> dict_rect;
-	
-	//Tile sheet
-	const Texture2D *img_tiles;
-};
 
+	//Tile sheet
+	const Texture2D* img_tiles;
+};

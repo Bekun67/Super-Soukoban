@@ -59,13 +59,13 @@ AppStatus Game::Initialise(float scale)
 AppStatus Game::LoadResources()
 {
     ResourceManager& data = ResourceManager::Instance();
-    
+
     if (data.LoadTexture(Resource::IMG_MENU, "images/menu.png") != AppStatus::OK)
     {
         return AppStatus::ERROR;
     }
     img_menu = data.GetTexture(Resource::IMG_MENU);
-    
+
     return AppStatus::OK;
 }
 AppStatus Game::BeginPlay()
@@ -93,31 +93,31 @@ void Game::FinishPlay()
 AppStatus Game::Update()
 {
     //Check if user attempts to close the window, either by clicking the close button or by pressing Alt+F4
-    if(WindowShouldClose()) return AppStatus::QUIT;
+    if (WindowShouldClose()) return AppStatus::QUIT;
 
     switch (state)
     {
-        case GameState::MAIN_MENU: 
-            if (IsKeyPressed(KEY_ESCAPE)) return AppStatus::QUIT;
-            if (IsKeyPressed(KEY_SPACE))
-            {
-                if(BeginPlay() != AppStatus::OK) return AppStatus::ERROR;
-                state = GameState::PLAYING;
-            }
-            break;
+    case GameState::MAIN_MENU:
+        if (IsKeyPressed(KEY_ESCAPE)) return AppStatus::QUIT;
+        if (IsKeyPressed(KEY_SPACE))
+        {
+            if (BeginPlay() != AppStatus::OK) return AppStatus::ERROR;
+            state = GameState::PLAYING;
+        }
+        break;
 
-        case GameState::PLAYING:  
-            if (IsKeyPressed(KEY_ESCAPE))
-            {
-                FinishPlay();
-                state = GameState::MAIN_MENU;
-            }
-            else
-            {
-                //Game logic
-                scene->Update();
-            }
-            break;
+    case GameState::PLAYING:
+        if (IsKeyPressed(KEY_ESCAPE))
+        {
+            FinishPlay();
+            state = GameState::MAIN_MENU;
+        }
+        else
+        {
+            //Game logic
+            scene->Update();
+        }
+        break;
     }
     return AppStatus::OK;
 }
@@ -126,18 +126,18 @@ void Game::Render()
     //Draw everything in the render texture, note this will not be rendered on screen, yet
     BeginTextureMode(target);
     ClearBackground(BLACK);
-    
+
     switch (state)
     {
-        case GameState::MAIN_MENU:
-            DrawTexture(*img_menu, 0, 0, WHITE);
-            break;
+    case GameState::MAIN_MENU:
+        DrawTexture(*img_menu, 0, 0, WHITE);
+        break;
 
-        case GameState::PLAYING:
-            scene->Render();
-            break;
+    case GameState::PLAYING:
+        scene->Render();
+        break;
     }
-    
+
     EndTextureMode();
 
     //Draw render texture to screen, properly scaled

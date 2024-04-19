@@ -24,7 +24,7 @@ AppStatus Player::Initialise()
 	const int n = PLAYER_FRAME_SIZE;
 
 	ResourceManager& data = ResourceManager::Instance();
-	if (data.LoadTexture(Resource::IMG_PLAYER, "images/eric.png") != AppStatus::OK)
+	if (data.LoadTexture(Resource::IMG_PLAYER, "images/soukobanguy.png") != AppStatus::OK)
 	{
 		return AppStatus::ERROR;
 	}
@@ -38,15 +38,15 @@ AppStatus Player::Initialise()
 
 	Sprite* sprite = dynamic_cast<Sprite*>(render);
 	sprite->SetNumberAnimations((int)PlayerAnim::NUM_ANIMATIONS);
-	
+
 	sprite->SetAnimationDelay((int)PlayerAnim::IDLE_RIGHT, ANIM_DELAY);
 	sprite->AddKeyFrame((int)PlayerAnim::IDLE_RIGHT, { 0, n * 5, n, n });
 	sprite->SetAnimationDelay((int)PlayerAnim::IDLE_LEFT, ANIM_DELAY);
 	sprite->AddKeyFrame((int)PlayerAnim::IDLE_LEFT, { 0, n * 5, -n, n });
 	sprite->SetAnimationDelay((int)PlayerAnim::IDLE_UP, ANIM_DELAY);
-	sprite->AddKeyFrame((int)PlayerAnim::IDLE_UP, {0,  n * 4, n, n });
+	sprite->AddKeyFrame((int)PlayerAnim::IDLE_UP, { 0,  n * 4, n, n });
 	sprite->SetAnimationDelay((int)PlayerAnim::IDLE_DOWN, ANIM_DELAY);
-	sprite->AddKeyFrame((int)PlayerAnim::IDLE_DOWN, {0, n * 3, n, n });
+	sprite->AddKeyFrame((int)PlayerAnim::IDLE_DOWN, { 0, n * 3, n, n });
 
 	sprite->SetAnimationDelay((int)PlayerAnim::WALKING_RIGHT, ANIM_DELAY);
 	for (i = 0; i < 9; ++i)
@@ -75,7 +75,7 @@ AppStatus Player::Initialise()
 	sprite->SetAnimationDelay((int)PlayerAnim::PUSHING_DOWN, ANIM_DELAY);
 	for (i = 0; i < 7; ++i)
 		sprite->AddKeyFrame((int)PlayerAnim::PUSHING_DOWN, { (float)i * n, n * 2,  n, n });
-	
+
 	sprite->SetAnimation((int)PlayerAnim::IDLE_RIGHT);
 
 	return AppStatus::OK;
@@ -192,8 +192,8 @@ void Player::ChangeAnimRight()
 	look = Look::RIGHT;
 	switch (state)
 	{
-		case State::IDLE:	 SetAnimation((int)PlayerAnim::IDLE_RIGHT);    break; 
-		case State::WALKING: SetAnimation((int)PlayerAnim::WALKING_RIGHT); break;
+	case State::IDLE:	 SetAnimation((int)PlayerAnim::IDLE_RIGHT);    break;
+	case State::WALKING: SetAnimation((int)PlayerAnim::WALKING_RIGHT); break;
 	}
 }
 void Player::ChangeAnimLeft()
@@ -201,8 +201,8 @@ void Player::ChangeAnimLeft()
 	look = Look::LEFT;
 	switch (state)
 	{
-		case State::IDLE:	 SetAnimation((int)PlayerAnim::IDLE_LEFT);    break;
-		case State::WALKING: SetAnimation((int)PlayerAnim::WALKING_LEFT); break;
+	case State::IDLE:	 SetAnimation((int)PlayerAnim::IDLE_LEFT);    break;
+	case State::WALKING: SetAnimation((int)PlayerAnim::WALKING_LEFT); break;
 	}
 }
 void Player::ChangeAnimUp()
@@ -260,7 +260,7 @@ void Player::MoveX()
 		{
 			pos.x = prev_x;
 			if (state == State::WALKING) Stop();
-		}		
+		}
 		if (map->TestBoxLeft(box))
 		{
 			StartPushingLeft();
@@ -437,10 +437,10 @@ void Player::MoveY()
 	}
 }
 void Player::DrawDebug(const Color& col) const
-{	
+{
 	Entity::DrawHitbox(pos.x, pos.y, width, height, col);
-	
-	DrawText(TextFormat("Position: (%d,%d)\nSize: %dx%d\nFrame: %dx%d", pos.x, pos.y, width, height, frame_width, frame_height), 18*16, 0, 8, LIGHTGRAY);
+
+	DrawText(TextFormat("Position: (%d,%d)\nSize: %dx%d\nFrame: %dx%d", pos.x, pos.y, width, height, frame_width, frame_height), 18 * 16, 0, 8, LIGHTGRAY);
 	DrawPixel(pos.x, pos.y, WHITE);
 }
 void Player::Release()
