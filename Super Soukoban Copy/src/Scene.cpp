@@ -8,6 +8,8 @@ Scene::Scene()
 	level = nullptr;
 	Auxlevel = nullptr;
 
+	font = nullptr;
+
 	camera.target = { 0, 0 };				//Center of the screen
 	camera.offset = { 0, MARGIN_GUI_Y };	//Offset from the target (center of the screen)
 	camera.rotation = 0.0f;					//No rotation
@@ -28,6 +30,11 @@ Scene::~Scene()
 		level->Release();
 		delete level;
 		level = nullptr;
+	}
+	if (font != nullptr)
+	{
+		delete font;
+		font = nullptr;
 	}
 	if (Auxlevel != nullptr)
 	{
@@ -68,6 +75,17 @@ AppStatus Scene::Init()
 	if (Auxlevel == nullptr)
 	{
 		LOG("Failed to allocate memory for Level");
+		return AppStatus::ERROR;
+	}
+	font = new Text();
+	if (font == nullptr)
+	{
+		LOG("Failed to allocate memory for font 1");
+		return AppStatus::ERROR;
+	}
+	if (font->Initialise(Resource::IMG_FONT, "images/font16x16.png", ' ', 8) != AppStatus::OK)
+	{
+		LOG("Failed to initialise Level");
 		return AppStatus::ERROR;
 	}
 	//Initialise level
@@ -311,25 +329,25 @@ void Scene::RenderGUI() const
 {
 	if (player->level == 1)
 	{
-		DrawText(TextFormat("STAGE", player->GetScore()), 10, 10, 8, YELLOW);
-		DrawText(TextFormat("01", player->GetScore()), 58, 10, 8, LIGHTGRAY);
+		font->Draw(TextFormat("STAGE", player->GetScore()), 10, 10, 8, YELLOW);
+		font->Draw(TextFormat("01", player->GetScore()), 58, 10, 8, LIGHTGRAY);
 
-		DrawText(TextFormat("STEP", player->steps), 10, 24, 8, YELLOW);
+		font->Draw(TextFormat("STEP", player->steps), 10, 24, 8, YELLOW);
 
 		if (player->steps < 10)
 		{
-			DrawText(TextFormat("000%i", player->steps), 45, 24, 8, LIGHTGRAY);
+			font->Draw(TextFormat("000%i", player->steps), 45, 24, 8, LIGHTGRAY);
 		}
 		else if (player->steps < 100)
 		{
-			DrawText(TextFormat("00%i", player->steps), 45, 24, 8, LIGHTGRAY);
+			font->Draw(TextFormat("00%i", player->steps), 45, 24, 8, LIGHTGRAY);
 		}
 		else if (player->steps < 1000)
 		{
-			DrawText(TextFormat("0%i", player->steps), 45, 24, 8, LIGHTGRAY);
+			font->Draw(TextFormat("0%i", player->steps), 45, 24, 8, LIGHTGRAY);
 		}
-		DrawText(TextFormat("LIMIT", player->steps), 10, 34, 8, YELLOW);
-		DrawText(TextFormat("0090", player->steps), 45, 34, 8, LIGHTGRAY);
+		font->Draw(TextFormat("LIMIT", player->steps), 10, 34, 8, YELLOW);
+		font->Draw(TextFormat("0090", player->steps), 45, 34, 8, LIGHTGRAY);
 
 		if (player->PushingLeft)
 		{

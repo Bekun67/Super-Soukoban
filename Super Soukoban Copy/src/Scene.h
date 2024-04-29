@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "Object.h"
+#include "Text.h"
 
 enum class DebugMode { OFF, SPRITES_AND_HITBOXES, ONLY_HITBOXES, SIZE };
 
@@ -35,4 +36,6 @@ private:
 
     Camera2D camera;
     DebugMode debug;
+
+    Text *font;
 };

@@ -15,6 +15,7 @@ enum class Resource {
     IMG_WIN,
     IMG_LOSE,
     IMG_INITIAL,
+    IMG_FONT,
 };
 
 class ResourceManager {

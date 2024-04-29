@@ -40,6 +40,9 @@
     <ClCompile Include="src\StaticImage.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="src\Text.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Globals.h">
@@ -82,6 +85,9 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="src\StaticImage.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Text.h">
       <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
