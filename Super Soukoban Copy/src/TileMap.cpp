@@ -16,9 +16,6 @@ TileMap::TileMap()
 	img_box = nullptr;
 	img_win = nullptr;
 	img_lose = nullptr;
-	img_stage = nullptr;
-	img_step = nullptr;
-	img_limit = nullptr;
 
 	InitTileDictionary();
 }
@@ -68,22 +65,6 @@ AppStatus TileMap::Initialise()
 		return AppStatus::ERROR;
 	}
 	img_hud = data.GetTexture(Resource::IMG_HUD);
-
-	if (data.LoadTexture(Resource::IMG_STEP, "images/step.png") != AppStatus::OK)
-	{
-		return AppStatus::ERROR;
-	}
-	img_step = data.GetTexture(Resource::IMG_STEP);
-	if (data.LoadTexture(Resource::IMG_LIMIT, "images/limit.png") != AppStatus::OK)
-	{
-		return AppStatus::ERROR;
-	}
-	img_limit = data.GetTexture(Resource::IMG_LIMIT);
-	if (data.LoadTexture(Resource::IMG_STAGE, "images/stage.png") != AppStatus::OK)
-	{
-		return AppStatus::ERROR;
-	}
-	img_stage = data.GetTexture(Resource::IMG_STAGE);
 
 	if (data.LoadTexture(Resource::IMG_BOX, "images/box.png") != AppStatus::OK)
 	{
@@ -457,13 +438,6 @@ void TileMap::Render()
 		}
 	}
 	DrawTexture(*img_hud, 5, 7, WHITE);
-	DrawTexture(*img_limit, 10, 34, WHITE);
-	DrawTexture(*img_step, 45, 34, WHITE);
-	DrawTexture(*img_stage, 10, 10, WHITE);
-
-
-	//DrawTexture(*map->img_box, 5, 7, WHITE);
-	//DrawBox();
 }
 
 void TileMap::DrawBox(int x, int y) const
@@ -489,9 +463,6 @@ void TileMap::Release()
 	data.ReleaseTexture(Resource::IMG_BOX);
 	data.ReleaseTexture(Resource::IMG_WIN);
 	data.ReleaseTexture(Resource::IMG_LOSE);
-	data.ReleaseTexture(Resource::IMG_STAGE);
-	data.ReleaseTexture(Resource::IMG_STEP);
-	data.ReleaseTexture(Resource::IMG_LIMIT);
 
 	dict_rect.clear();
 }

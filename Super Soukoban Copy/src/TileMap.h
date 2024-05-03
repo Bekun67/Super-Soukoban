@@ -110,7 +110,4 @@ private:
 	const Texture2D* img_hud;
 	const Texture2D* img_win;
 	const Texture2D* img_lose;
-	const Texture2D* img_limit;
-	const Texture2D* img_stage;
-	const Texture2D* img_step;
 };

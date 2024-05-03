@@ -16,9 +16,6 @@ enum class Resource {
     IMG_LOSE,
     IMG_INITIAL,
     IMG_FONT,
-    IMG_STAGE,
-    IMG_LIMIT,
-    IMG_STEP,
 };
 
 class ResourceManager {

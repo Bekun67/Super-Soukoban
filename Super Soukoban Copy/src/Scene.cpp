@@ -83,7 +83,7 @@ AppStatus Scene::Init()
 		LOG("Failed to allocate memory for font 1");
 		return AppStatus::ERROR;
 	}
-	if (font->Initialise(Resource::IMG_FONT, "images/font12x12.png", (char)0, 12) != AppStatus::OK)
+	if (font->Initialise(Resource::IMG_FONT, "images/font8x8.png", (char)0, 8) != AppStatus::OK)
 	{
 		LOG("Failed to initialise Level");
 		return AppStatus::ERROR;
@@ -329,30 +329,26 @@ void Scene::RenderGUI() const
 {
 	if (player->level == 1)
 	{
-		//font->Draw(10, 10, TextFormat("STAGE", player->GetScore()), WHITE);
-		font->Draw(58, 10, TextFormat("01", player->GetScore()), WHITE);
+		font->Draw(10, 10, TextFormat("*/()+", player->GetScore()), WHITE);
+		font->Draw(68, 10, TextFormat("01", player->GetScore()), WHITE);
 
-		font->Draw(10, 24, TextFormat("STEP", player->steps), WHITE);
+		font->Draw(10, 24, TextFormat("*/+'", player->steps), WHITE);
 
 		if (player->steps < 10)
 		{
-			font->Draw(45, 24, TextFormat("000%i", player->steps), WHITE);
-			//font->Draw(TextFormat("000%i", player->steps), 45, 24, 8, LIGHTGRAY);
+			font->Draw(52, 24, TextFormat("000%i", player->steps), WHITE);
 		}
 		else if (player->steps < 100)
 		{
-			font->Draw(45, 24, TextFormat("00%i", player->steps), WHITE);
-			//font->Draw(TextFormat("00%i", player->steps), 45, 24, 8, LIGHTGRAY);
+			font->Draw(52, 24, TextFormat("00%i", player->steps), WHITE);
 		}
 		else if (player->steps < 1000)
 		{
-			font->Draw(45, 24, TextFormat("0%i", player->steps), WHITE);
-			//font->Draw(TextFormat("0%i", player->steps), 45, 24, 8, LIGHTGRAY);
+			font->Draw(52, 24, TextFormat("0%i", player->steps), WHITE);
 		}
-		//font->Draw(10, 34, TextFormat("LIMIT", player->steps), WHITE);
-		//font->Draw(45, 34, TextFormat("0090", player->steps), WHITE);
-		//font->Draw(TextFormat("LIMIT", player->steps), 10, 34, 8, YELLOW);
-		//font->Draw(TextFormat("0090", player->steps), 45, 34, 8, LIGHTGRAY);
+		font->Draw(10, 34, TextFormat(",.-./", player->steps), WHITE);
+		font->Draw(52, 34, TextFormat("0090", player->steps), WHITE);
+
 
 		if (player->PushingLeft)
 		{

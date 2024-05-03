@@ -605,9 +605,15 @@ void Player::MoveY()
 			}
 
 			steps++;
-			state = State::IDLE;
-			PushingUp = false;
-			Stop();
+			//state = State::IDLE;
+			//PushingUp = false;
+			//Stop();
+			if (!IsKeyPressed(KEY_UP))
+			{
+				state = State::IDLE;
+				PushingUp = false;
+				Stop();
+			}
 		}
 		CheckSteps();
 	}
@@ -641,7 +647,6 @@ void Player::MoveY()
 
 	if (IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !lost && !won && state != State::WALKING && state != State::PUSHING)
 	{
-		WaitForInput();
 		if (Moving == false)
 		{
 			Moving = true;
@@ -657,7 +662,6 @@ void Player::MoveY()
 	}
 	else if (IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !lost && !won && state != State::WALKING && state != State::PUSHING)
 	{
-		WaitForInput();
 		if (Moving == false)
 		{
 			Moving = true;
