@@ -7,7 +7,7 @@
 
 enum class Resource {
     IMG_MENU,
-    IMG_PLAYER, 
+    IMG_PLAYER,
     IMG_TILES,
     IMG_ITEMS,
     IMG_HUD,
@@ -16,6 +16,9 @@ enum class Resource {
     IMG_LOSE,
     IMG_INITIAL,
     IMG_FONT,
+    IMG_STAGE,
+    IMG_LIMIT,
+    IMG_STEP,
 };
 
 class ResourceManager {

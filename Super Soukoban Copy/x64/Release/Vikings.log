@@ -1,30 +1,7 @@
-﻿  Game.cpp
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Game.cpp(16,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Game.cpp(135,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Game.cpp(248,17): warning C4305: '+=': truncation from 'double' to 'float'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Game.cpp(253,17): warning C4305: '-=': truncation from 'double' to 'float'
-  main.cpp
-  Object.cpp
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Object.cpp(14,2): warning C4065: switch statement contains 'default' but no 'case' labels
-  Player.cpp
-  RenderComponent.cpp
-  ResourceManager.cpp
-  Scene.cpp
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(332,9): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(333,9): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(335,9): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(339,10): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(343,10): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(347,10): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(349,9): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Scene.cpp(350,9): error C2039: 'DrawText': is not a member of 'Text'
-C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\src\Text.h(7): message : see declaration of 'Text'
-  Text.cpp
-  TileMap.cpp
+﻿  Scene.cpp
+  Generating code
+  5 of 826 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Vikings.vcxproj -> C:\Users\isaacrp\Documents\GitHub\Super-Soukoban\Super Soukoban Copy\x64\Release\Super Soukoban.exe
