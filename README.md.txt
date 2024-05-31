@@ -1,0 +1,40 @@
+1 min video(YouTube): https://youtu.be/UFBqq4zfeA0
+Link to GitHub page: https://github.com/Bekun67/Super-Soukoban
+
+Isaac Ramirez: Bekun67 
+Clara Rodriguez: Kopeke4
+
+
+DESCRIPTION OF THE GAME
+
+"Super Soukoban" for the Super Nintendo Entertainment System (SNES) is a classic puzzle game that challenges players to push crates onto designated spots within a warehouse setting. 
+Developed by Thinking Rabbit, it offers a simple yet addictive gameplay experience where players must strategically move crates around the map to solve increasingly complex puzzles. 
+With over 250 levels, intuitive controls, and a retro aesthetic, "Super Soukoban" provides hours of brain-teasing entertainment for puzzle enthusiasts of all ages.
+
+
+CONTROLS
+
+Push the crates in order to place them in their designated place, marked down by red spots on the ground.
+
+UP KEY: Move Up
+LEFT KEY: Move Left
+DOWN KEY: Move Down
+RIGHT KEY: Move Right
+
+R: Reset level
+
+DEBUG CONTROLS
+
+F1: Show Hitbox
+F2: Win
+F3: Lose
+Z(If in Initial Screen): Go To Title Screen
+Space Bar(If in Initial Screen): Go To Lvl 1
+
+
+LIST OF FEATURES
+
+For this project we had to redesign the whole code that was provided to us as a template.
+The map, which initially consisted of a platformer style one had to be replaced by a zenithal view. 
+The tilemap could be modified from the initial code but the character movement sprites had to be completely altered, eliminating the jump and fall sprites, adding the necessary animations to walk up or down and adding the sprites of each direction that appear when pushing boxes.
+We also had to add the music, there are a total of 4 tracks: in the menu, during playing and if the win or lose conditions get fullfiled. Aside from a SFX that gets implemented whenever the user enters or exits the game throught the title screen.
