@@ -75,7 +75,7 @@ AppStatus Player::Initialise()
 	for (i = 0; i < 7; ++i)
 		sprite->AddKeyFrame((int)PlayerAnim::PUSHING_DOWN, { (float)i * n, n * 2,  n, n });
 
-	sprite->SetAnimation((int)PlayerAnim::IDLE_RIGHT);
+ 	sprite->SetAnimation((int)PlayerAnim::IDLE_RIGHT);
 
 	state = State::IDLE;
 
@@ -258,6 +258,69 @@ void Player::CheckSteps()
 			//LOSE CONDITION
 		}
 	}
+	if (level == 2 and !won)
+	{
+		if (steps == STEPCOUNT_LVL2)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
+	if (level == 3 and !won)
+	{
+		if (steps == STEPCOUNT_LVL3)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
+	if (level == 4 and !won)
+	{
+		if (steps == STEPCOUNT_LVL4)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
+	if (level == 5 and !won)
+	{
+		if (steps == STEPCOUNT_LVL5)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
+	if (level == 6 and !won)
+	{
+		if (steps == STEPCOUNT_LVL6)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
+	if (level == 7 and !won)
+	{
+		if (steps == STEPCOUNT_LVL7)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
+	if (level == 8 and !won)
+	{
+		if (steps == STEPCOUNT_LVL8)
+		{
+			lost = true;
+			Stop();
+			//LOSE CONDITION
+		}
+	}
 }
 
 void Player::WaitForInput()
@@ -275,7 +338,7 @@ void Player::MoveX()
 		if (maxMove < pos.x)
 		{
 			pos.x += -PLAYER_SPEED;
-			DrawTexture(*map->img_box, pos.x, pos.y, WHITE);
+			//DrawTexture(*map->img_box, pos.x, pos.y, WHITE);
 		}
 		box = GetHitbox();
 		if (map->TestCollisionWallLeft(box))
@@ -307,7 +370,7 @@ void Player::MoveX()
 				if (Destination == Tile::FLOORRED)
 				{
 					map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
-					if (map->CheckWin(WINCOUNT_LVL1))
+					if (map->CheckWin(wincount))
 					{
 						won = true;
 					}
@@ -365,7 +428,7 @@ void Player::MoveX()
 				if (Destination == Tile::FLOORRED)
 				{
 					map->ChangeTile(x1, pos.y / TILE_SIZE, OldTile);
-					if (map->CheckWin(WINCOUNT_LVL1))
+					if (map->CheckWin(wincount))
 					{
 						won = true;
 					}
@@ -397,10 +460,14 @@ void Player::MoveX()
 			if (Destination == Tile::FLOORRED)
 			{
 				map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOXU);
-				if (map->CheckWin(WINCOUNT_LVL1))
+				if (map->CheckWin(wincount))
 				{
 					won = true;
 				}
+			}
+			if (Destination != Tile::FLOORRED)
+			{
+				map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOX);
 			}
 
 			steps++;
@@ -424,10 +491,14 @@ void Player::MoveX()
 			if (Destination == Tile::FLOORRED)
 			{
 				map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOXU);
-				if (map->CheckWin(WINCOUNT_LVL1))
+				if (map->CheckWin(wincount))
 				{
 					won = true;
 				}
+			}
+			if (Destination != Tile::FLOORRED)
+			{
+				map->ChangeTile(x2, pos.y / TILE_SIZE, Tile::BOX);
 			}
 
 			steps++;
@@ -514,7 +585,7 @@ void Player::MoveY()
 				if (Destination == Tile::FLOORRED)
 				{
 					map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
-					if (map->CheckWin(WINCOUNT_LVL1))
+					if (map->CheckWin(wincount))
 					{
 						won = true;
 					}
@@ -567,7 +638,7 @@ void Player::MoveY()
 				if (Destination == Tile::FLOORRED)
 				{
 					map->ChangeTile(pos.x / TILE_SIZE, y1, OldTile);
-					if (map->CheckWin(WINCOUNT_LVL1))
+					if (map->CheckWin(wincount))
 					{
 						won = true;
 					}
@@ -598,10 +669,14 @@ void Player::MoveY()
 			if (Destination == Tile::FLOORRED)
 			{
 				map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOXU);
-				if (map->CheckWin(WINCOUNT_LVL1))
+				if (map->CheckWin(wincount))
 				{
 					won = true;
 				}
+			}
+			if (Destination != Tile::FLOORRED)
+			{
+				map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOX);
 			}
 
 			steps++;
@@ -625,10 +700,14 @@ void Player::MoveY()
 			if (Destination == Tile::FLOORRED)
 			{
 				map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOXU);
-				if (map->CheckWin(WINCOUNT_LVL1))
+				if (map->CheckWin(wincount))
 				{
 					won = true;
 				}
+			}
+			if (Destination != Tile::FLOORRED)
+			{
+				map->ChangeTile(pos.x / TILE_SIZE, y2, Tile::BOX);
 			}
 
 			steps++;
@@ -641,7 +720,6 @@ void Player::MoveY()
 
 	if (IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !lost && !won && state != State::WALKING && state != State::PUSHING)
 	{
-		WaitForInput();
 		if (Moving == false)
 		{
 			Moving = true;
@@ -657,7 +735,6 @@ void Player::MoveY()
 	}
 	else if (IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT) && !lost && !won && state != State::WALKING && state != State::PUSHING)
 	{
-		WaitForInput();
 		if (Moving == false)
 		{
 			Moving = true;
@@ -677,7 +754,7 @@ void Player::DrawDebug(const Color& col) const
 {
 	Entity::DrawHitbox(pos.x, pos.y, width, height, col);
 
-	DrawText(TextFormat("Position: (%d,%d)\nSize: %dx%d\nFrame: %dx%d", pos.x, pos.y, width, height, frame_width, frame_height), 18 * 16, 0, 8, LIGHTGRAY);
+	DrawText(TextFormat("Position: (%d,%d)\nSize: %dx%d\nFrame: %dx%d", pos.x, pos.y, width, height, frame_width, frame_height), 16 * 16, 0, 8, LIGHTGRAY);
 	DrawPixel(pos.x, pos.y, WHITE);
 }
 void Player::Release()

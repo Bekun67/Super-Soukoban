@@ -48,7 +48,7 @@ Scene::~Scene()
 	}
 	objects.clear();
 }
-AppStatus Scene::Init()
+AppStatus Scene::Init(int stage)
 {
 	//Create player
 	player = new Player({ 0,0 }, State::IDLE, Look::RIGHT);
@@ -83,7 +83,7 @@ AppStatus Scene::Init()
 		LOG("Failed to allocate memory for font 1");
 		return AppStatus::ERROR;
 	}
-	if (font->Initialise(Resource::IMG_FONT, "images/font16x16.png", ' ', 8) != AppStatus::OK)
+	if (font->Initialise(Resource::IMG_FONT, "images/font8x8.png", (char)0, 8) != AppStatus::OK)
 	{
 		LOG("Failed to initialise Level");
 		return AppStatus::ERROR;
@@ -100,7 +100,7 @@ AppStatus Scene::Init()
 		return AppStatus::ERROR;
 	}
 	//Load level
-	if (LoadLevel(1) != AppStatus::OK)
+	if (LoadLevel(stage) != AppStatus::OK)
 	{
 		LOG("Failed to load Level 1");
 		return AppStatus::ERROR;
@@ -122,15 +122,21 @@ AppStatus Scene::LoadLevel(int stage)
 	int* mapAux = nullptr;
 	Object* obj;
 
+	CurrentStage = stage;
+
 	ClearLevel();
 
 	size = LEVEL_WIDTH * LEVEL_HEIGHT;
 	if (stage == 1)
 	{
 		player->level = 1;
+		player->wincount = WINCOUNT_LVL1;
 		player->steps = 0;
 		player->lost = false;
 		player->won = false;
+
+		pos.x = 4 * TILE_SIZE;
+		pos.y = 3 * TILE_SIZE - 1;
 
 		map = new int[size] {
 			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
@@ -157,13 +163,290 @@ AppStatus Scene::LoadLevel(int stage)
 				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
 		};
 		player->InitScore();
+
 	}
-	else
+
+	if (stage == 2)
 	{
-		//Error level doesn't exist or incorrect level number
-		LOG("Failed to load level, stage %d doesn't exist", stage);
-		return AppStatus::ERROR;
+		player->level = 2;
+		player->wincount = WINCOUNT_LVL2;
+		player->steps = 0;
+		player->lost = false;
+		player->won = false;
+
+		pos.x = 2 * TILE_SIZE;
+		pos.y = 3 * TILE_SIZE - 1;
+
+		map = new int[size] {
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 2, 3, 3, 3, 2, 6, 6, 6, 6, 6,
+				6, 2, 5, 5, 5, 2, 6, 6, 6, 6, 6,
+				6, 2, 5, 1, 1, 2, 6, 2, 3, 2, 6,
+				6, 2, 5, 1, 5, 2, 6, 2, 7, 2, 6,
+				6, 3, 2, 2, 5, 3, 3, 3, 7, 2, 6,
+				6, 6, 2, 3, 5, 5, 5, 5, 7, 2, 6,
+				6, 6, 2, 5, 5, 5, 2, 5, 5, 2, 6,
+				6, 6, 2, 5, 5, 5, 2, 3, 3, 3, 6,
+				6, 6, 3, 3, 3, 3, 3, 6, 6, 6, 6,
+		};
+
+		mapAux = new int[size] {
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 2, 3, 3, 3, 2, 6, 6, 6, 6, 6,
+				6, 2, 5, 5, 5, 2, 6, 6, 6, 6, 6,
+				6, 2, 5, 5, 5, 2, 6, 2, 3, 2, 6,
+				6, 2, 5, 5, 5, 2, 6, 2, 7, 2, 6,
+				6, 3, 2, 2, 5, 3, 3, 3, 7, 2, 6,
+				6, 6, 2, 3, 5, 5, 5, 5, 7, 2, 6,
+				6, 6, 2, 5, 5, 5, 2, 5, 5, 2, 6,
+				6, 6, 2, 5, 5, 5, 2, 3, 3, 3, 6,
+				6, 6, 3, 3, 3, 3, 3, 6, 6, 6, 6,
+		};
+		player->InitScore();
 	}
+
+	if (stage == 3)
+	{
+		player->level = 3;
+		player->wincount = WINCOUNT_LVL3;
+		player->steps = 0;
+		player->lost = false;
+		player->won = false;
+
+		pos.x = 4 * TILE_SIZE;
+		pos.y = 4 * TILE_SIZE - 1;
+
+		map = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 2, 3, 3, 2, 6, 6, 6,
+				6, 6, 6, 2, 3, 5, 5, 2, 6, 6, 6,
+				6, 6, 6, 2, 5, 1, 5, 2, 6, 6, 6,
+				6, 6, 6, 2, 2, 1, 5, 3, 2, 6, 6,
+				6, 6, 6, 2, 3, 5, 1, 5, 2, 6, 6,
+				6, 6, 6, 2, 7, 1, 5, 5, 2, 6, 6,
+				6, 6, 6, 2, 7, 7, 4, 7, 2, 6, 6,
+				6, 6, 6, 3, 3, 3, 3, 3, 3, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+
+		mapAux = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 2, 3, 3, 2, 6, 6, 6,
+				6, 6, 6, 2, 3, 5, 5, 2, 6, 6, 6,
+				6, 6, 6, 2, 5, 5, 5, 2, 6, 6, 6,
+				6, 6, 6, 2, 2, 5, 5, 3, 2, 6, 6,
+				6, 6, 6, 2, 3, 5, 5, 5, 2, 6, 6,
+				6, 6, 6, 2, 7, 5, 5, 5, 2, 6, 6,
+				6, 6, 6, 2, 7, 7, 7, 7, 2, 6, 6,
+				6, 6, 6, 3, 3, 3, 3, 3, 3, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+		player->InitScore();
+	}
+
+	if (stage == 4)
+	{
+		player->level = 4;
+		player->wincount = WINCOUNT_LVL4;
+		player->steps = 0;
+		player->lost = false;
+		player->won = false;
+
+		pos.x = 3 * TILE_SIZE;
+		pos.y = 5 * TILE_SIZE - 1;
+
+		map = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 2, 3, 3, 3, 3, 3, 2, 6, 6,
+				6, 6, 2, 5, 5, 5, 5, 5, 3, 3, 2,
+				6, 2, 3, 1, 3, 3, 3, 5, 5, 5, 2,
+				6, 2, 5, 5, 5, 1, 5, 5, 1, 5, 2,
+				6, 2, 5, 7, 7, 2, 5, 1, 5, 2, 3,
+				6, 3, 2, 7, 7, 2, 5, 5, 5, 2, 6,
+				6, 6, 3, 3, 3, 3, 3, 3, 3, 3, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+
+		mapAux = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 2, 3, 3, 3, 3, 3, 2, 6, 6,
+				6, 6, 2, 5, 5, 5, 5, 5, 3, 3, 2,
+				6, 2, 3, 5, 3, 3, 3, 5, 5, 5, 2,
+				6, 2, 5, 5, 5, 5, 5, 5, 5, 5, 2,
+				6, 2, 5, 7, 7, 2, 5, 5, 5, 2, 3,
+				6, 3, 2, 7, 7, 2, 5, 5, 5, 2, 6,
+				6, 6, 3, 3, 3, 3, 3, 3, 3, 3, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+		player->InitScore();
+	}
+
+	if (stage == 5)
+	{
+		player->level = 5;
+		player->wincount = WINCOUNT_LVL5;
+		player->steps = 0;
+		player->lost = false;
+		player->won = false;
+
+		pos.x = 3 * TILE_SIZE;
+		pos.y = 3 * TILE_SIZE - 1;
+
+		map = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 2, 3, 3, 2, 6, 6, 6, 6, 6,
+				6, 6, 2, 5, 5, 3, 3, 2, 6, 6, 6,
+				6, 6, 2, 5, 1, 5, 5, 2, 6, 6, 6,
+				6, 2, 3, 2, 5, 2, 5, 3, 2, 6, 6,
+				6, 2, 7, 3, 5, 3, 5, 5, 2, 6, 6,
+				6, 2, 7, 1, 5, 5, 3, 5, 2, 6, 6,
+				6, 2, 7, 5, 5, 5, 1, 5, 2, 6, 6,
+				6, 3, 3, 3, 3, 3, 3, 3, 3, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+
+		mapAux = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 2, 3, 3, 2, 6, 6, 6, 6, 6,
+				6, 6, 2, 5, 5, 3, 3, 2, 6, 6, 6,
+				6, 6, 2, 5, 5, 5, 5, 2, 6, 6, 6,
+				6, 2, 3, 2, 5, 2, 5, 3, 2, 6, 6,
+				6, 2, 7, 3, 5, 3, 5, 5, 2, 6, 6,
+				6, 2, 7, 5, 5, 5, 3, 5, 2, 6, 6,
+				6, 2, 7, 5, 5, 5, 5, 5, 2, 6, 6,
+				6, 3, 3, 3, 3, 3, 3, 3, 3, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+		player->InitScore();
+	}
+
+	if (stage == 6)
+	{
+		player->level = 6;
+		player->wincount = WINCOUNT_LVL6;
+		player->steps = 0;
+		player->lost = false;
+		player->won = false;
+
+		pos.x = 9 * TILE_SIZE;
+		pos.y = 5 * TILE_SIZE - 1;
+
+		map = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 2, 3, 3, 3, 3, 2, 6,
+				6, 6, 2, 3, 3, 5, 5, 5, 5, 2, 6,
+				6, 2, 3, 7, 5, 1, 3, 3, 5, 3, 2,
+				6, 2, 7, 7, 1, 5, 1, 5, 5, 5, 2,
+				6, 2, 7, 7, 5, 1, 5, 1, 5, 2, 3,
+				6, 3, 3, 3, 3, 3, 2, 5, 5, 2, 6,
+				6, 6, 6, 6, 6, 6, 3, 3, 3, 3, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+
+		mapAux = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 2, 3, 3, 3, 3, 2, 6,
+				6, 6, 2, 3, 3, 5, 5, 5, 5, 2, 6,
+				6, 2, 3, 7, 5, 5, 3, 3, 5, 3, 2,
+				6, 2, 7, 7, 5, 5, 5, 5, 5, 5, 2,
+				6, 2, 7, 7, 5, 5, 5, 5, 5, 2, 3,
+				6, 3, 3, 3, 3, 3, 2, 5, 5, 2, 6,
+				6, 6, 6, 6, 6, 6, 3, 3, 3, 3, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+		player->InitScore();
+	}
+
+	if (stage == 7)
+	{
+		player->level = 7;
+		player->wincount = WINCOUNT_LVL7;
+		player->steps = 0;
+		player->lost = false;
+		player->won = false;
+
+		pos.x = 2 * TILE_SIZE;
+		pos.y = 5 * TILE_SIZE - 1;
+
+		map = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 2, 3, 3, 3, 3, 2, 6, 6,
+				6, 6, 6, 2, 5, 5, 5, 5, 2, 6, 6,
+				6, 2, 3, 3, 1, 1, 1, 5, 2, 6, 6,
+				6, 2, 5, 5, 1, 7, 7, 5, 2, 6, 6,
+				6, 2, 5, 1, 7, 7, 7, 2, 3, 6, 6,
+				6, 3, 3, 3, 2, 5, 5, 2, 6, 6, 6,
+				6, 6, 6, 6, 3, 3, 3, 3, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+
+		mapAux = new int[size] {
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 2, 3, 3, 3, 3, 2, 6, 6,
+				6, 6, 6, 2, 5, 5, 5, 5, 2, 6, 6,
+				6, 2, 3, 3, 5, 5, 5, 5, 2, 6, 6,
+				6, 2, 5, 5, 5, 7, 7, 5, 2, 6, 6,
+				6, 2, 5, 5, 7, 7, 7, 2, 3, 6, 6,
+				6, 3, 3, 3, 2, 5, 5, 2, 6, 6, 6,
+				6, 6, 6, 6, 3, 3, 3, 3, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+		player->InitScore();
+	}
+
+	if (stage == 8)
+	{
+		player->level = 8;
+		player->wincount = WINCOUNT_LVL8;
+		player->steps = 0;
+		player->lost = false;
+		player->won = false;
+
+		pos.x = 7 * TILE_SIZE;
+		pos.y = 8 * TILE_SIZE - 1;
+
+		map = new int[size] {
+			6, 6, 2, 3, 3, 3, 2, 3, 3, 2, 6,
+				6, 6, 2, 5, 5, 5, 3, 7, 5, 2, 6,
+				6, 2, 3, 5, 5, 1, 7, 7, 7, 2, 6,
+				6, 2, 5, 5, 1, 5, 2, 4, 7, 2, 6,
+				2, 3, 5, 3, 3, 1, 3, 5, 3, 2, 6,
+				2, 5, 5, 5, 1, 5, 5, 1, 5, 2, 6,
+				2, 5, 5, 5, 2, 5, 5, 5, 5, 2, 6,
+				3, 3, 3, 3, 3, 3, 2, 5, 5, 2, 6,
+				6, 6, 6, 6, 6, 6, 3, 3, 3, 3, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+
+		mapAux = new int[size] {
+			6, 6, 2, 3, 3, 3, 2, 3, 3, 2, 6,
+				6, 6, 2, 5, 5, 5, 3, 7, 5, 2, 6,
+				6, 2, 3, 5, 5, 5, 7, 7, 7, 2, 6,
+				6, 2, 5, 5, 5, 5, 2, 7, 7, 2, 6,
+				2, 3, 5, 3, 3, 5, 3, 5, 3, 2, 6,
+				2, 5, 5, 5, 5, 5, 5, 5, 5, 2, 6,
+				2, 5, 5, 5, 2, 5, 5, 5, 5, 2, 6,
+				3, 3, 3, 3, 3, 3, 2, 5, 5, 2, 6,
+				6, 6, 6, 6, 6, 6, 3, 3, 3, 3, 6,
+				6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+		};
+		player->InitScore();
+	}
+
+	//else
+	//{
+	//	//Error level doesn't exist or incorrect level number
+	//	LOG("Failed to load level, stage %d doesn't exist", stage);
+	//	return AppStatus::ERROR;
+	//}
 
 	//Entities and objects
 	i = 0;
@@ -220,8 +503,6 @@ AppStatus Scene::LoadLevel(int stage)
 			++i;
 		}
 	}
-	pos.x = 4 * TILE_SIZE;
-	pos.y = 3 * TILE_SIZE - 1;
 	player->SetPos(pos);
 	//Tile map
 	level->Load(map, LEVEL_WIDTH, LEVEL_HEIGHT);
@@ -243,8 +524,7 @@ void Scene::Update()
 	//Debug levels instantly
 	if (IsKeyPressed(KEY_R))
 	{
-
-		LoadLevel(1);
+		LoadLevel(CurrentStage);
 	}
 
 	level->Update();
@@ -327,51 +607,85 @@ void Scene::RenderObjectsDebug(const Color& col) const
 }
 void Scene::RenderGUI() const
 {
+	if (player->PushingLeft)
+	{
+		level->DrawBox(player->x - TILE_SIZE, player->y - TILE_SIZE + 1);
+	}
+	if (player->PushingRight)
+	{
+		level->DrawBox(player->x + TILE_SIZE, player->y - TILE_SIZE + 1);
+	}
+	if (player->PushingUp)
+	{
+		level->DrawBox(player->x, player->y - TILE_SIZE * 2);
+	}
+	if (player->PushingDown)
+	{
+		level->DrawBox(player->x, player->y);
+	}
+	if (player->won)
+	{
+		level->DrawWin();
+	}
+	if (player->lost)
+	{
+		level->DrawLose();
+	}
+
+	font->Draw(10, 24, TextFormat("*/+'", player->steps), WHITE);
+	font->Draw(10, 10, TextFormat("*/()+", player->GetScore()), WHITE);
+	font->Draw(10, 34, TextFormat(",.-./", player->steps), WHITE);
+
+	if (player->steps < 10)
+	{
+		font->Draw(52, 24, TextFormat("000%i", player->steps), WHITE);
+	}
+	else if (player->steps < 100)
+	{
+		font->Draw(52, 24, TextFormat("00%i", player->steps), WHITE);
+	}
+	else if (player->steps < 1000)
+	{
+		font->Draw(52, 24, TextFormat("0%i", player->steps), WHITE);
+	}
 	if (player->level == 1)
 	{
-		font->Draw(TextFormat("STAGE", player->GetScore()), 10, 10, 8, YELLOW);
-		font->Draw(TextFormat("01", player->GetScore()), 58, 10, 8, LIGHTGRAY);
-
-		font->Draw(TextFormat("STEP", player->steps), 10, 24, 8, YELLOW);
-
-		if (player->steps < 10)
-		{
-			font->Draw(TextFormat("000%i", player->steps), 45, 24, 8, LIGHTGRAY);
-		}
-		else if (player->steps < 100)
-		{
-			font->Draw(TextFormat("00%i", player->steps), 45, 24, 8, LIGHTGRAY);
-		}
-		else if (player->steps < 1000)
-		{
-			font->Draw(TextFormat("0%i", player->steps), 45, 24, 8, LIGHTGRAY);
-		}
-		font->Draw(TextFormat("LIMIT", player->steps), 10, 34, 8, YELLOW);
-		font->Draw(TextFormat("0090", player->steps), 45, 34, 8, LIGHTGRAY);
-
-		if (player->PushingLeft)
-		{
-			level->DrawBox(player->x - TILE_SIZE, player->y - TILE_SIZE + 1);
-		}
-		if (player->PushingRight)
-		{
-			level->DrawBox(player->x + TILE_SIZE, player->y - TILE_SIZE + 1);
-		}
-		if (player->PushingUp)
-		{
-			level->DrawBox(player->x, player->y - TILE_SIZE * 2);
-		}
-		if (player->PushingDown)
-		{
-			level->DrawBox(player->x, player->y);
-		}
-		if (player->won)
-		{
-			level->DrawWin();
-		}
-		if (player->lost)
-		{
-			level->DrawLose();
-		}
+		font->Draw(68, 10, TextFormat("01", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0090", player->steps), WHITE);
+	}
+	if (player->level == 2)
+	{
+		font->Draw(68, 10, TextFormat("02", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0120", player->steps), WHITE);
+	}
+	if (player->level == 3)
+	{
+		font->Draw(68, 10, TextFormat("03", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0050", player->steps), WHITE);
+	}
+	if (player->level == 4)
+	{
+		font->Draw(68, 10, TextFormat("04", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0140", player->steps), WHITE);
+	}
+	if (player->level == 5)
+	{
+		font->Draw(68, 10, TextFormat("05", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0065", player->steps), WHITE);
+	}
+	if (player->level == 6)
+	{
+		font->Draw(68, 10, TextFormat("06", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0080", player->steps), WHITE);
+	}
+	if (player->level == 7)
+	{
+		font->Draw(68, 10, TextFormat("07", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0080", player->steps), WHITE);
+	}
+	if (player->level == 8)
+	{
+		font->Draw(68, 10, TextFormat("08", player->GetScore()), WHITE);
+		font->Draw(52, 34, TextFormat("0160", player->steps), WHITE);
 	}
 }

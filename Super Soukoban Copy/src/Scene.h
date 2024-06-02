@@ -13,7 +13,7 @@ public:
     Scene();
     ~Scene();
 
-    AppStatus Init();
+    AppStatus Init(int stage);
     void Update();
     void Render();
     void Release();
@@ -22,6 +22,8 @@ public:
 
 private:
     AppStatus LoadLevel(int stage);
+
+    int CurrentStage = 0;
 
     void CheckCollisions();
     void ClearLevel();

@@ -49,6 +49,7 @@ public:
 	int level = 0;
 	bool lost = false;
 	bool won = false;
+	int wincount = 0;
 
 	bool PushingUp = false;
 	bool PushingDown = false;

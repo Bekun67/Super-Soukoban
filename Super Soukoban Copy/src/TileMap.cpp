@@ -438,8 +438,6 @@ void TileMap::Render()
 		}
 	}
 	DrawTexture(*img_hud, 5, 7, WHITE);
-	//DrawTexture(*map->img_box, 5, 7, WHITE);
-	//DrawBox();
 }
 
 void TileMap::DrawBox(int x, int y) const

@@ -1,7 +1,7 @@
 #pragma once
 
 //Displaying scale factor
-#define GAME_SCALE_FACTOR	2.0f
+#define GAME_SCALE_FACTOR	4.5f
 
 //Function return values
 enum class AppStatus { OK = 0, ERROR, QUIT };
@@ -27,6 +27,34 @@ void log(const char file[], int line, const char* text, ...);
 //LEVEL 1
 #define WINCOUNT_LVL1   3
 #define STEPCOUNT_LVL1  90
+
+//LEVEL 2
+#define WINCOUNT_LVL2   3
+#define STEPCOUNT_LVL2  120
+
+//LEVEL 3
+#define WINCOUNT_LVL3   5
+#define STEPCOUNT_LVL3  50
+
+//LEVEL 4
+#define WINCOUNT_LVL4   4
+#define STEPCOUNT_LVL4  140
+
+//LEVEL 5
+#define WINCOUNT_LVL5   3
+#define STEPCOUNT_LVL5  65
+
+//LEVEL 6
+#define WINCOUNT_LVL6   5
+#define STEPCOUNT_LVL6  60
+
+//LEVEL 7
+#define WINCOUNT_LVL7   5
+#define STEPCOUNT_LVL7  80
+
+//LEVEL 8
+#define WINCOUNT_LVL8   6
+#define STEPCOUNT_LVL8  160
 
 //Entities animation delay
 #define ANIM_DELAY		1
