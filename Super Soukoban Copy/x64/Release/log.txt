@@ -1,0 +1,7 @@
+Project executed on 02-06-2024 at 22:14:53.
+ResourceManager.cpp(20): Failed to load texture 
+Game.cpp(57): Failed to load resources
+main.cpp(27): Application start
+main.cpp(30): Failed to initialise game
+main.cpp(46): Application finish
+main.cpp(49): Bye :3
