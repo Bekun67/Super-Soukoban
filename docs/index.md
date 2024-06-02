@@ -1,5 +1,4 @@
 # SUPER SOUKOBAN - TRIBUTE
-chetixgames.github.io
 
 
 ### DESCRIPTION OF THE GAME
