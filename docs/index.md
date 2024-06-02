@@ -21,14 +21,16 @@ Push the crates in order to place them in their designated place, marked down by
 - RIGHT KEY: Move Right
 
 - R: Reset level
+- Esc: Close the game if in the main menu, and exit the different levels while playing
+
+Change between levels in the level selector screen using the left and right keys
 
 DEBUG CONTROLS
 
 - F1: Show Hitbox
 - F2: Win
 - F3: Lose
-- Z(If in Initial Screen): Go To Title Screen
-- Space Bar(If in Initial Screen): Go To Lvl 1
+- Z(If in Initial Screen and Opening): Go To Title Screen
 
 ### CHETIX GAMES - Our team
 
