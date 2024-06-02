@@ -1,10 +1,10 @@
 2 min video (YouTube):  https://youtu.be/ybXSLJoaFLY
 
 Link to GitHub page:    https://bekun67.github.io/Super-Soukoban/
-                  			https://github.com/Bekun67/Super-Soukoban
+                  			/ https://github.com/Bekun67/Super-Soukoban
 
 Isaac Ramirez: Bekun67 
-Clara Rodriguez: Kopeke4
+/ Clara Rodriguez: Kopeke4
 
 
 DESCRIPTION OF THE GAME
