@@ -21,20 +21,20 @@ With over 250 levels, intuitive controls, and a retro aesthetic, "Super Soukoban
 
 Push the crates in order to place them in their designated place, marked down by red spots on the ground.
 
-UP KEY: Move Up
-LEFT KEY: Move Left
-DOWN KEY: Move Down
-RIGHT KEY: Move Right
+- UP KEY: Move Up
+- LEFT KEY: Move Left
+- DOWN KEY: Move Down
+- RIGHT KEY: Move Right
 
-R: Reset level
+- R: Reset level
 
 DEBUG CONTROLS
 
-F1: Show Hitbox
-F2: Win
-F3: Lose
-Z(If in Initial Screen): Go To Title Screen
-Space Bar(If in Initial Screen): Go To Lvl 1
+- F1: Show Hitbox
+- F2: Win
+- F3: Lose
+- Z(If in Initial Screen): Go To Title Screen
+- Space Bar(If in Initial Screen): Go To Lvl 1
 
 ***CHETIX GAMES - Our team***
 
