@@ -1,8 +1,6 @@
-# chetixgames.github.io
-
 # SUPER SOUKOBAN - TRIBUTE
-## Isaac Ramirez: Bekun67 
-## Clara Rodriguez: Kopeke4
+
+# chetixgames.github.io
 
 
 ***DESCRIPTION OF THE GAME***
@@ -23,33 +21,34 @@ With over 250 levels, intuitive controls, and a retro aesthetic, "Super Soukoban
 
 Push the crates in order to place them in their designated place, marked down by red spots on the ground.
 
-UP KEY: Move Up
-LEFT KEY: Move Left
-DOWN KEY: Move Down
-RIGHT KEY: Move Right
+- UP KEY: Move Up
+- LEFT KEY: Move Left
+- DOWN KEY: Move Down
+- RIGHT KEY: Move Right
 
-R: Reset level
+- R: Reset level
 
 DEBUG CONTROLS
 
-F1: Show Hitbox
-F2: Win
-F3: Lose
-Z(If in Initial Screen): Go To Title Screen
-Space Bar(If in Initial Screen): Go To Lvl 1
+- F1: Show Hitbox
+- F2: Win
+- F3: Lose
+- Z(If in Initial Screen): Go To Title Screen
+- Space Bar(If in Initial Screen): Go To Lvl 1
 
 ***CHETIX GAMES - Our team***
+
 ![image](https://github.com/Kopeke4/chetixgames.github.io/assets/160216289/59fde098-beac-4641-9f02-1ae950cc6c16)
 
 ***TEAM MEMBERS***
 
 - Isaac Ramírez
-  Code
-  [Github account](https://github.com/Bekun67)
+  - Code
+  - [Github account](https://github.com/Bekun67)
   
 - Clara Rodríguez
-  Design
-  [Github account](https://github.com/Kopeke4)
+  - Design
+  - [Github account](https://github.com/Kopeke4)
 
 
 This site was built using [GitHub Pages](https://pages.github.com/).
