@@ -44,5 +44,5 @@ DEBUG CONTROLS
 + Design
 + [Github account](https://github.com/Kopeke4)
 
-
+Download our latest version of the game here! [Releases](https://github.com/Bekun67/Super-Soukoban/releases/tag/Alpha).
 This site was built using [GitHub Pages](https://pages.github.com/).
