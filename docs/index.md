@@ -37,17 +37,18 @@ Z(If in Initial Screen): Go To Title Screen
 Space Bar(If in Initial Screen): Go To Lvl 1
 
 ***CHETIX GAMES - Our team***
+
 ![image](https://github.com/Kopeke4/chetixgames.github.io/assets/160216289/59fde098-beac-4641-9f02-1ae950cc6c16)
 
 ***TEAM MEMBERS***
 
 - Isaac Ramírez
-  Code
-  [Github account](https://github.com/Bekun67)
+  - Code
+  - [Github account](https://github.com/Bekun67)
   
 - Clara Rodríguez
-  Design
-  [Github account](https://github.com/Kopeke4)
+  - Design
+  - [Github account](https://github.com/Kopeke4)
 
 
 This site was built using [GitHub Pages](https://pages.github.com/).
