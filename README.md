@@ -9,7 +9,7 @@ With over 250 levels, intuitive controls, and a retro aesthetic, "Super Soukoban
 
 ### GAMEPLAY
 
-[https://www.youtube.com/watch?v=ybXSLJoaFLY](https://www.youtube.com/watch?v=ybXSLJoaFLY)
+[![Ver el video](https://img.youtube.com/vi/ybXSLJoaFLY/0.jpg)](https://youtu.be/ybXSLJoaFLY?si=0taIJ8fA4nro9e-i)
 
 ### CONTROLS
 
