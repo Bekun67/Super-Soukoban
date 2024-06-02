@@ -1,8 +1,6 @@
-# chetixgames.github.io
-
 # SUPER SOUKOBAN - TRIBUTE
-## Isaac Ramirez: Bekun67 
-## Clara Rodriguez: Kopeke4
+
+# chetixgames.github.io
 
 
 ***DESCRIPTION OF THE GAME***
