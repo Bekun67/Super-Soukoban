@@ -1,5 +1,7 @@
-1 min video(YouTube): https://youtu.be/UFBqq4zfeA0
-Link to GitHub page: https://github.com/Bekun67/Super-Soukoban
+2 min video (YouTube):  https://youtu.be/ybXSLJoaFLY
+
+Link to GitHub page:    https://bekun67.github.io/Super-Soukoban/
+                  			https://github.com/Bekun67/Super-Soukoban
 
 Isaac Ramirez: Bekun67 
 Clara Rodriguez: Kopeke4
@@ -22,14 +24,16 @@ DOWN KEY: Move Down
 RIGHT KEY: Move Right
 
 R: Reset level
+Esc: Close the game if in the main menu, and exit the different levels while playing
+
+Change between levels in the level selector screen using the left and right keys
 
 DEBUG CONTROLS
 
 F1: Show Hitbox
 F2: Win
 F3: Lose
-Z(If in Initial Screen): Go To Title Screen
-Space Bar(If in Initial Screen): Go To Lvl 1
+Z(If in Initial Screen and Opening): Go To Title Screen
 
 
 LIST OF FEATURES
